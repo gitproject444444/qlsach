@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Author;
+use App\Http\Requests\CreateAuthorRequest;
+
 
 class AuthorController extends Controller
 {
@@ -13,7 +16,8 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        //
+        $data['authors'] = Author::paginate(5);
+        return view('admin.authors',$data);
     }
 
     /**
@@ -32,9 +36,14 @@ class AuthorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateAuthorRequest $request)
     {
-        //
+        $name = $request->name;
+        $author = Author::create([
+            'name' => $name
+        ]);
+        // return 'success';
+        return redirect()->route('admin.authors.index')->with('message',"thêm sách $author->name thành công");
     }
 
     /**
@@ -68,7 +77,7 @@ class AuthorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**
@@ -79,6 +88,26 @@ class AuthorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $author = Author::findOrFail($id);
+        $books = $author->books;
+       foreach($books as $book){
+         $book->delete();
+       }
+        $author->delete();
+        return redirect()->route('admin.authors.index')->with('message', "Đã tác giả $author->name");
+    }
+    public function changeauthor(Request $request)
+    {
+        if($request->author){
+            $authorName = $request->author;
+            $id = $request->id;
+            $author = Author::findOrFail($id);
+            $author->name = $authorName;
+            $author->save();
+            return 'update success!!!';
+        }else{
+            return 'request fails !!!';
+        }
+
     }
 }

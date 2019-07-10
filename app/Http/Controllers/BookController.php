@@ -15,7 +15,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        $data['books'] = Book::all();
+        $data['books'] = Book::with('author')->paginate(5);
         $data['authors'] = Author::all();
         return view('admin.books',$data);
     }
@@ -38,7 +38,19 @@ class BookController extends Controller
      */
     public function store(BookRequest $request)
     {
-        //
+        $name = $request->name;
+        $authorName = $request->author;
+        $author = Author::firstOrCreate([
+            'name' => $authorName,
+        ], [
+            'name' => $authorName,
+        ]);
+        $book = Book::create([
+            'name' => $name,
+            'author_id' => $author->id
+        ]);
+        return redirect()->back()->with('message',"thêm sách $book->name thành công");
+
     }
 
     /**
@@ -72,7 +84,7 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**
@@ -83,6 +95,32 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $book = Book::findOrFail($id);
+        $book->delete();
+        return redirect()->route('admin.books.index')->with('message', "Đã xóa sách $book->name");
     }
+
+    public function changebook(Request $request)
+    {
+        if($request->namebook){
+            $name = $request->namebook;
+            $authorName = $request->author;
+            $id = $request->id;
+            $book = Book::findOrFail($id);
+            $author = Author::firstOrCreate([
+                'name' => $authorName,
+            ], [
+                'name' => $authorName,
+            ]);
+            $book->name = $name;
+            $book->author_id = $author->id;
+            $book->save();
+            return 'update success!!!';
+        }
+
+    }
+
+
+
+
 }

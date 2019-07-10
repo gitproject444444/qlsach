@@ -28,4 +28,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
 
     Route::resource('books', 'BookController');
     Route::resource('authors', 'AuthorController');
+    Route::post('/changebook', 'BookController@changebook')->name('changebook');
+    Route::post('/changeauthor', 'AuthorController@changeauthor')->name('changeauthor');
+    Route::get('/trashs', 'TrashController@index')->name('trashs.index');
+    Route::put('/restorebook/{id}', 'TrashController@restoreBook')->name('trashs.restorebook');
+    Route::put('/restoreauthor/{id}', 'TrashController@restoreAuthor')->name('trashs.restoreauthor');
+    Route::delete('/delCompletelyBook/{id}', 'TrashController@delCompletelyBook')->name('trashs.delcompletelybook');
+    Route::delete('/delcompletelyauthor/{id}', 'TrashController@delCompletelyAuthor')->name('trashs.delcompletelyauthor');
+    Route::delete('/delallbook', 'TrashController@delAllBook')->name('trashs.delallbook');
+    Route::delete('/delallauthor', 'TrashController@delAllAuthor')->name('trashs.delallauthor');
+
 });
+// Route::post('/changebook', 'BookController@changebook')->name('changebook');
