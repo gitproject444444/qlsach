@@ -1,7 +1,7 @@
 @extends('admin.masteradmin')
 @section('content')
 
-<div class="row">
+<div class="row parent">
     <div class="col-md-3">
         <!-- Nút Tao Tác giả -->
         <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Tao Tác
@@ -37,10 +37,10 @@
         </div>
     </div>
     {{-- End Modal --}}
-    <div class="col-md-3 offset-md-4">
+    {{-- <div class="parrentalert">
         <div class="alert alert-success edit hidden"></div>
         <div class="alert alert-danger del hidden"></div>
-    </div>
+    </div> --}}
 </div>
 <table class="table table-striped">
     <thead>

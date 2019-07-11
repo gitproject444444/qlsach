@@ -24,10 +24,11 @@ Route::get('/master', 'HomeController@master')->name('master');
 
 
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'CheckRole'], function () {
 
     Route::resource('books', 'BookController');
     Route::resource('authors', 'AuthorController');
+    Route::resource('users', 'UserController');
     Route::post('/changebook', 'BookController@changebook')->name('changebook');
     Route::post('/changeauthor', 'AuthorController@changeauthor')->name('changeauthor');
     Route::get('/trashs', 'TrashController@index')->name('trashs.index');
@@ -39,4 +40,20 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
     Route::delete('/delallauthor', 'TrashController@delAllAuthor')->name('trashs.delallauthor');
 
 });
-// Route::post('/changebook', 'BookController@changebook')->name('changebook');
+Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => 'auth'], function () {
+
+    // Route::resource('books', 'BookController');
+    // Route::resource('authors', 'AuthorController');
+    // Route::resource('users', 'UserController');
+    // Route::post('/changebook', 'BookController@changebook')->name('changebook');
+    // Route::post('/changeauthor', 'AuthorController@changeauthor')->name('changeauthor');
+    Route::get('/borrow', 'BookController@borrow')->name('borrow.index');
+    Route::get('/giveback', 'BookController@giveback')->name('giveback.index');
+    // Route::put('/restorebook/{id}', 'TrashController@restoreBook')->name('trashs.restorebook');
+    // Route::put('/restoreauthor/{id}', 'TrashController@restoreAuthor')->name('trashs.restoreauthor');
+    // Route::delete('/delCompletelyBook/{id}', 'TrashController@delCompletelyBook')->name('trashs.delcompletelybook');
+    // Route::delete('/delcompletelyauthor/{id}', 'TrashController@delCompletelyAuthor')->name('trashs.delcompletelyauthor');
+    // Route::delete('/delallbook', 'TrashController@delAllBook')->name('trashs.delallbook');
+    // Route::delete('/delallauthor', 'TrashController@delAllAuthor')->name('trashs.delallauthor');
+
+});

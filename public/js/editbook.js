@@ -52,9 +52,24 @@ $(document).ready(function() {
                     $('#editauthor' + id).select2('destroy');
                     $('.click').removeClass("hidden");
                     author.children('span').html(authornew).show();
-                    name.html(namebook);
-                    $('.edit').removeClass("hidden");
-                    $('.edit').html(response);
+
+
+                    if (response == 'update success!!!') {
+                        name.html(namebook);
+                        $('.edit').removeClass("hidden");
+                        $('.del').addClass("hidden");
+                        $('.edit').html(response);
+                    } else {
+                        name.html(nameval);
+                        $('.del').removeClass("hidden");
+                        $('.edit').addClass("hidden");
+                        $('.del').html(response);
+                    }
+
+
+
+                    // $('.edit').hide(3000);
+
                 }
             });
 

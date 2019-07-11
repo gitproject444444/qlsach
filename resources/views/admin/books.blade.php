@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-3 parent">
         <!-- Nút tạo sách -->
         <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Tạo sách</button>
         <!-- Modal -->
@@ -49,6 +49,10 @@
                 </div>
             </div>
         </div>
+        {{-- <div class="parrentalert">
+            <div class="alert alert-success edit hidden"></div>
+            <div class="alert alert-danger del hidden"></div>
+        </div> --}}
     </div>
     {{-- End Modal --}}
 
@@ -71,8 +75,6 @@
                 <li class="nav-item">
                     <a class="nav-link" id="busy-tab" data-toggle="tab" href="#busy" role="tab" aria-controls="busy"
                         aria-selected="false">Đang xem</a>
-                        <div class="alert alert-success edit hidden"></div>
-                        <div class="alert alert-danger del hidden"></div>
                 </li>
 
             </ul>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Book;
 use App\Author;
 use App\Http\Requests\BookRequest;
+
 class BookController extends Controller
 {
     /**
@@ -17,7 +18,7 @@ class BookController extends Controller
     {
         $data['books'] = Book::with('author')->paginate(5);
         $data['authors'] = Author::all();
-        return view('admin.books',$data);
+        return view('admin.books', $data);
     }
 
     /**
@@ -25,11 +26,6 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -49,42 +45,7 @@ class BookController extends Controller
             'name' => $name,
             'author_id' => $author->id
         ]);
-        return redirect()->back()->with('message',"thêm sách $book->name thành công");
-
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-
+        return redirect()->back()->with('message', "thêm sách $book->name thành công");
     }
 
     /**
@@ -102,8 +63,10 @@ class BookController extends Controller
 
     public function changebook(Request $request)
     {
-        if($request->namebook){
-            $name = $request->namebook;
+
+        $name = $request->namebook;
+        $oldbook = Book::where('name', $name)->first();
+        if (!$oldbook) {
             $authorName = $request->author;
             $id = $request->id;
             $book = Book::findOrFail($id);
@@ -116,11 +79,14 @@ class BookController extends Controller
             $book->author_id = $author->id;
             $book->save();
             return 'update success!!!';
+        } else {
+            return 'update trùng!!!';
         }
-
     }
 
-
-
-
+    public function borrow()
+    {
+        $books = Book::with('author')->where('status',0)->paginate(5);
+        return view('user.borrow',compact('books'));
+     }
 }

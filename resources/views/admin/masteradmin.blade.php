@@ -107,28 +107,37 @@
 
         <main class="py-4">
             <div class="container">
-                @if (session('message'))
-                <div class="alert alert-success tc">
-                    {{ session('message') }}
-                </div>
-                @endif
-                @if (session('error'))
-                <div class="alert alert-danger loi">
-                    {{ session('error') }}
-                </div>
-                @endif
                 <div class="row borderall">
                     <div class="col-md-3">
                         <div class="vertical-menu">
-                            <a href="{{ route('admin.books.index') }}" class="{{ (\Request::route()->getName() == 'admin.books.index') ? 'active' : '' }}">Sách</a>
-                            <a href="{{ route('admin.authors.index') }}" class="{{ (\Request::route()->getName() == 'admin.authors.index') ? 'active' : '' }}">Tác giả</a>
-                            <a href="#">Tài khoản</a>
-                            <a href="{{ route('admin.trashs.index') }}" class="{{ (\Request::route()->getName() == 'admin.trashs.index') ? 'active' : '' }}">Thùng rác</a>
+                            <a href="{{ route('admin.books.index') }}"
+                                class="{{ (\Request::route()->getName() == 'admin.books.index') ? 'active' : '' }}">Sách</a>
+                            <a href="{{ route('admin.authors.index') }}"
+                                class="{{ (\Request::route()->getName() == 'admin.authors.index') ? 'active' : '' }}">Tác
+                                giả</a>
+                            <a href="{{ route('admin.users.index') }}"
+                                class="{{ (\Request::route()->getName() == 'admin.users.index') ? 'active' : '' }}">Tài
+                                khoản</a>
+                            <a href="{{ route('admin.trashs.index') }}"
+                                class="{{ (\Request::route()->getName() == 'admin.trashs.index') ? 'active' : '' }}">Thùng
+                                rác</a>
                         </div>
                     </div>
                     <div class="col-md-9">
                         <div class="content-admin">
                             @yield('content')
+                        </div>
+                    </div>
+                    <div class="parrentalert">
+                        <div class="alert alert-success edit hidden">
+                            @if (session('message'))
+                            {{ session('message') }}
+                            @endif
+                        </div>
+                        <div class="alert alert-danger del hidden">
+                            @if (session('error'))
+                            {{ session('error') }}
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -147,7 +156,7 @@
             })
     </script>
     @endif
-     {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
+    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     @yield('body_scripts_bottom')
 </body>
