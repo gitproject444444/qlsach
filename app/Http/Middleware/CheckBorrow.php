@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class CheckRole
+class CheckBorrow
 {
     /**
      * Handle an incoming request.
@@ -16,11 +16,11 @@ class CheckRole
      */
     public function handle($request, Closure $next)
     {
-        $role = Auth::user()->role;
-        if ($role == 1) {
-            return $next($request);
+        $status = Auth::user()->status;
+        if ($status == 1) {
+            return redirect()->route('user.borrow.index')->with('error', "Vẫn đang mượn sách chưa trả");
         } else {
-            return redirect()->route('user.borrow.index');
+            return $next($request);
         }
     }
 }

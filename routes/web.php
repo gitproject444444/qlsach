@@ -1,4 +1,9 @@
 <?php
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
+use App\User;
+use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -47,8 +52,21 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => 'auth'], func
     // Route::resource('users', 'UserController');
     // Route::post('/changebook', 'BookController@changebook')->name('changebook');
     // Route::post('/changeauthor', 'AuthorController@changeauthor')->name('changeauthor');
-    Route::get('/borrow', 'BookController@borrow')->name('borrow.index');
-    Route::get('/giveback', 'BookController@giveback')->name('giveback.index');
+    Route::get('/borrow', 'BookController@borrowindex')->name('borrow.index');
+    Route::post('/borrow', 'BookController@borrow')->name('borrow.store');
+    Route::get('/prepareborrow/{id}', 'BookController@prepareBorrow')->name('prepareborrow');
+    Route::get('/watchbook/{id}', 'BookController@readbook')->name('watchbook');
+
+
+
+
+
+
+
+
+
+    Route::get('/giveback/{id}', 'UserController@show')->name('giveback.index');
+    Route::put('/giveback/{id}', 'UserController@giveback')->name('giveback.edit');
     // Route::put('/restorebook/{id}', 'TrashController@restoreBook')->name('trashs.restorebook');
     // Route::put('/restoreauthor/{id}', 'TrashController@restoreAuthor')->name('trashs.restoreauthor');
     // Route::delete('/delCompletelyBook/{id}', 'TrashController@delCompletelyBook')->name('trashs.delcompletelybook');
@@ -57,3 +75,22 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => 'auth'], func
     // Route::delete('/delallauthor', 'TrashController@delAllAuthor')->name('trashs.delallauthor');
 
 });
+
+view()->composer(['user.masteruser'], function ($view) {
+
+    $user = User::find(Auth::id());
+    if($user->status == 1){
+        $books = $user->books;
+        foreach($books as $book){
+            if($book->pivot->status == 1){
+                 $id = $book->id;
+                 $view->with('bookborrow', $id);
+            }
+         }
+}
+});
+
+
+
+
+

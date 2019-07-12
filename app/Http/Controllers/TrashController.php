@@ -44,8 +44,8 @@ class TrashController extends Controller
     {
         $author = Author::onlyTrashed()->where('id', $id)->first();
         $books = $author->books;
-        foreach($books as $book){
-          $book->forceDelete();
+        foreach ($books as $book) {
+            $book->forceDelete();
         }
         $author->forceDelete();
         return redirect()->route('admin.authors.index')->with('message', "Xóa vĩnh viễn tác giả $author->name thành công");
@@ -53,7 +53,7 @@ class TrashController extends Controller
     public function delAllBook()
     {
         $books = Book::onlyTrashed()->get();
-        foreach($books as $book){
+        foreach ($books as $book) {
             $book->forceDelete();
         }
         return redirect()->route('admin.trashs.index')->with('message', "Xóa hết sách thành công");
@@ -61,7 +61,7 @@ class TrashController extends Controller
     public function delAllAuthor()
     {
         $authors = Author::onlyTrashed()->get();
-        foreach($authors as $key => $author){
+        foreach ($authors as $key => $author) {
             $author->books()->forceDelete();
             $author->forceDelete();
         }

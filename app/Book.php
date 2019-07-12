@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Book extends Model
 {
     use SoftDeletes;
@@ -26,21 +27,6 @@ class Book extends Model
 
     public function users()
     {
-        return $this->belongsToMany('App\User', 'user_book')->withPivot('status','pay')->withTimestamps();
+        return $this->belongsToMany('App\User', 'user_book')->withPivot('status', 'pay')->withTimestamps();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

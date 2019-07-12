@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Author;
 use App\Http\Requests\CreateAuthorRequest;
 
-
 class AuthorController extends Controller
 {
     /**
@@ -76,7 +75,8 @@ class AuthorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    { }
+    {
+    }
 
     /**
      * Remove the specified resource from storage.

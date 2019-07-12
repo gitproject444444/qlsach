@@ -121,7 +121,10 @@
                     <div class="col-md-3">
                         <div class="vertical-menu">
                             <a href="{{ route('user.borrow.index') }}" class="{{ (\Request::route()->getName() == 'user.borrow.index') ? 'active' : '' }}">Mượn sách</a>
-                            <a href="{{ route('user.giveback.index') }}" class="{{ (\Request::route()->getName() == 'user.give.index') ? 'active' : '' }}">Trả</a>
+                            @if(isset($bookborrow))
+                            <a href="{{ route('user.giveback.index',['id' => $bookborrow]) }}" class="{{ (\Request::route()->getName() == 'user.giveback.index') ? 'active' : '' }}">Trả</a>
+                            @endif
+
                         </div>
                     </div>
                     <div class="col-md-9">

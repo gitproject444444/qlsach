@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        'App\Console\Commands\EveryDay',
     ];
 
     /**
@@ -24,8 +24,30 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command('everyday:mail')->everyMinute();
+
+
+        //     $schedule->call(function () {
+
+        //     })->everyMinute();
+
+
+
+
+        // $users = User::where('status', 1)->get();
+        // foreach ($users as $user) {
+        //     foreach ($user->books as $book) {
+        //         if ($book->pivot->status == 1) {
+        //             // $daybefore = $book->pivot->created_at;
+        //             // $dayafter = $book->pivot->pay;
+        //             $email = $user->email;
+        //             // Mail::to($email)->send(new BookLate());
+        //             $schedule->call(function () use ($email) {
+        //                 Mail::to($email)->send(new BookLate());
+        //             })->everyMinute();
+        //         }
+        //     }
+        // }
     }
 
     /**
@@ -35,7 +57,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }
